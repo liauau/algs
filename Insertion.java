@@ -58,14 +58,32 @@ public class Insertion {
      * @param a the array to be sorted
      */
     public static void sort(Comparable[] a) {
-        int n = a.length;
-        for (int i = 1; i < n; i++) {
-            for (int j = i; j > 0 && less(a[j], a[j-1]); j--) {
-                exch(a, j, j-1);
+        boolean no_optimize = false;
+
+        if (no_optimize) {
+            int n = a.length;
+            for (int i = 1; i < n; i++) {
+                for (int j = i; j > 0 && less(a[j], a[j-1]); j--) {
+                    exch(a, j, j-1);
+                }
+                //assert isSorted(a, 0, i);
             }
-            assert isSorted(a, 0, i);
+            assert isSorted(a);
         }
-        assert isSorted(a);
+        else
+        {
+            int n = a.length;
+            for (int i = 0; i < n; i++) {
+                int j = i;
+                Comparable tmp = a[j];
+                while ((j > 0) && less(a[j], a[j - 1])) {
+                    a[j] = a[j - 1];
+                    j--;
+                }
+                a[j] = tmp;
+            }
+            assert isSorted(a);
+        }
     }
 
     /**
